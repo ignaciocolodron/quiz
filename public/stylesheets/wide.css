@@ -15,6 +15,10 @@ nav span{
 	margin: 0px 100px 0px 0px;
 }
 
+nav span a{
+	margin-right: 300px;
+}
+
 section{
 	float: right;
 	width: 80%;
