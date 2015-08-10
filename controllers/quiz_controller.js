@@ -15,10 +15,19 @@ exports.load = function(req, res, next, quizId){
 
 // GET /quizes
 exports.index = function(req, res){
-	models.Quiz.findAll().then(function(quizes){
-		res.render('quizes/index.ejs', { quizes: quizes});
-	})
+	if(req.query.search != undefined){
+		var textToSearch = '%' + req.query.search + '%';
+		models.Quiz.findAll({where: [ "pregunta like ?", textToSearch ], order: "pregunta asc"}).then(function(quizes){
+			res.render('quizes/index.ejs', { quizes: quizes, textToSearch: req.query.search});
+		})
+	}else{
+		models.Quiz.findAll().then(function(quizes){
+			res.render('quizes/index.ejs', { quizes: quizes, textToSearch: null});
+		})
+	}
+	
 }
+
 
 //GET /quizes/:quizId
 exports.show = function(req, res){
