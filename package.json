@@ -6,7 +6,7 @@
     "start": "node ./bin/www"
   },
   "devDependencies": {
-    "sqlite3": "^3.0.10"
+    "sqlite3": "^3.0.8"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
@@ -15,10 +15,11 @@
     "ejs": "~2.3.3",
     "express": "~4.13.1",
     "express-partials": "^0.3.0",
+    "method-override": "^2.3.5",
     "morgan": "~1.6.1",
     "pg": "^4.1.1",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^3.0.0",
+    "sequelize": "^3.5.1",
     "serve-favicon": "~2.3.0"
   }
 }
