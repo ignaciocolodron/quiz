@@ -80,7 +80,7 @@ exports.create = function(req, res){
 
 //GET /quizes/author
 exports.author = function(req, res){
-	res.render('quizes/author', {author: 'Ignacio Colodrón Bestuer'});
+	res.render('quizes/author', {author: 'Ignacio Colodrón Bestuer', errors: []});
 }
 
 // GET /quizes/:id/edit
