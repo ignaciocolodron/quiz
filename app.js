@@ -29,6 +29,8 @@ app.use(session());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
 // Helpers dinamicos:
 app.use(function(req, res, next) {
   // guardar path en session.redir para despues de login
@@ -38,6 +40,28 @@ app.use(function(req, res, next) {
   
   // Hacer visible req.session en las vistas
   res.locals.session = req.session;
+  
+  next();
+});
+
+app.use(function(req, res, next) {
+  if(req.session.user){
+    var date = new Date();
+    var miliseconds = date.getTime();
+    //Si ya estaba logeado el usuario
+    if(req.session.user.lastRequestTime){
+      var timeSinceLastRequest = miliseconds - req.session.user.lastRequestTime; 
+      if(timeSinceLastRequest > 120000/* 2 minutos */){
+        req.session.user = null;
+        res.locals.session.user = null;
+      }else{
+        req.session.user.lastRequestTime = miliseconds;
+      }
+    //Si aún no estaba logeado el usuario
+    }else{
+        req.session.user.lastRequestTime = miliseconds;
+    }
+  }
   next();
 });
 
