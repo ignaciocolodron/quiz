@@ -44,6 +44,7 @@ app.use(function(req, res, next) {
   next();
 });
 
+// Auto logout después de 2 minutos de inactividad
 app.use(function(req, res, next) {
   if(req.session.user){
     var date = new Date();
@@ -53,16 +54,20 @@ app.use(function(req, res, next) {
       var timeSinceLastRequest = miliseconds - req.session.user.lastRequestTime; 
       if(timeSinceLastRequest > 120000/* 2 minutos */){
         req.session.user = null;
-        res.locals.session.user = null;
+        res.locals.session = req.session;
+        res.redirect('/login');
       }else{
         req.session.user.lastRequestTime = miliseconds;
+        next();
       }
     //Si aún no estaba logeado el usuario
     }else{
         req.session.user.lastRequestTime = miliseconds;
+        next();
     }
+  }else{
+    next();
   }
-  next();
 });
 
 app.use('/', routes);
